@@ -1,0 +1,20 @@
+{{outlet}}
+<section>
+  <main>
+    <form class="form-horizontal scrollale margin-top-0">
+      <div class="container-fluid no-padding">
+        <h2>List of Models</h2>
+        {{#if records.length}}
+          {{#each records as |record index|}}
+                  {{record-card-row rowData=record index=index page=page perPage=perPage}}
+          {{/each}}
+        {{else}}
+          <p class="insignificant form-control-static">No Projects available.</p>
+        {{/if}}
+      </div>
+    </form>
+    <div class="text-center">
+      {{content-pagination totalPages=pageCount page=page}}
+    </div>
+  </main>
+</section>

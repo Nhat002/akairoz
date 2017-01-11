@@ -1,18 +1,35 @@
 <tr>
   {{#each headers as |header|}}
-    {{#if header.sortable}}
-      <th class="col-xs-3 col-sm-{{header.size}} sortable {{if header.center "text-center"}}" data-toggle={{dataToggle}}
-      title={{header.tooltip}} {{action "sort" header.sortProperties}} style={{header.style}}>
-        {{header.name}}
-        {{#if header.isSorting}}
-          {{awesome-icon name=(if (is-equal sortDirection "asc") "sort-up" "sort-down")}}
-        {{/if}}
-      </th>
+    {{#if header.mobileInVisible}}
+      {{#if header.sortable}}
+        <th class="hidden-xs col-sm-{{header.size}} sortable {{if header.center "text-center"}}" data-toggle={{dataToggle}}
+        title={{header.tooltip}} {{action "sort" header.sortProperties}} style={{header.style}}>
+          {{header.name}}
+          {{#if header.isSorting}}
+            {{awesome-icon name=(if (is-equal sortDirection "asc") "sort-up" "sort-down")}}
+          {{/if}}
+        </th>
+      {{else}}
+        <th class="hidden-xs col-sm-{{header.size}} {{if header.center "text-center"}}" data-toggle={{dataToggle}} title={{tooltip}}
+        style={{header.style}}>
+          {{header.name}}
+        </th>
+      {{/if}}
     {{else}}
-      <th class="col-xs-3 col-sm-{{header.size}} {{if header.center "text-center"}}" data-toggle={{dataToggle}} title={{tooltip}}
-      style={{header.style}}>
-        {{header.name}}
-      </th>
+      {{#if header.sortable}}
+        <th class="col-xs-3 col-sm-{{header.size}} sortable {{if header.center "text-center"}}" data-toggle={{dataToggle}}
+        title={{header.tooltip}} {{action "sort" header.sortProperties}} style={{header.style}}>
+          {{header.name}}
+          {{#if header.isSorting}}
+            {{awesome-icon name=(if (is-equal sortDirection "asc") "sort-up" "sort-down")}}
+          {{/if}}
+        </th>
+      {{else}}
+        <th class="col-xs-3 col-sm-{{header.size}} {{if header.center "text-center"}}" data-toggle={{dataToggle}} title={{tooltip}}
+        style={{header.style}}>
+          {{header.name}}
+        </th>
+      {{/if}}
     {{/if}}
   {{/each}}
 </tr>

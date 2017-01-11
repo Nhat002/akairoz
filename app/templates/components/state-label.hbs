@@ -1,0 +1,22 @@
+{{label}}
+{{#if completed}}
+  {{#if completeMessage}}
+    {{trueMessage}}
+  {{else}}
+    {{awesome-icon name="check"}}
+  {{/if}}
+{{else}}
+  {{#if canceled}}
+    {{#if cancelMessage}}
+      {{cancelMessage}}
+    {{else}}
+      {{awesome-icon name="times"}}
+    {{/if}}
+  {{else}}
+    {{#if incompleteMessage}}
+      {{incompleteMessage}}
+    {{else}}
+      {{awesome-icon name="warning"}}
+    {{/if}}
+  {{/if}}
+{{/if}}

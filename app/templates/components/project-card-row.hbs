@@ -1,0 +1,24 @@
+ <div class="row">
+    <!-- Card Projects -->
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-image">
+                <img class="img-responsive" src="{{imgSource}}">
+                <span class="card-title">{{rowData.name}}</span>
+            </div>
+            
+            <div class="card-content">
+                {{rowData.description}}
+            </div>
+            
+            <div class="card-action">
+                <div>
+                    {{state-label label="Status" state=rowData.status}}
+                </div>
+                <div>
+                    {{state-label label="Payment Status" state=rowData.payment_status}}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

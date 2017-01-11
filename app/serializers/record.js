@@ -1,4 +1,3 @@
-import Ember from 'ember';
 import DS from 'ember-data';
 
 export default DS.JSONAPISerializer.extend({
@@ -6,8 +5,7 @@ export default DS.JSONAPISerializer.extend({
     return Ember.String.underscore(attr);
   },
   normalizeResponse(store, primaryModelClass, payload, id, requestType) {
-    console.log(payload)
-    return this._super(...arguments)
+    return this._super(...arguments);
   }
 
 });

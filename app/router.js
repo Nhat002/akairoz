@@ -7,12 +7,8 @@ const Router = Ember.Router.extend({
 });
 
 Router.map(function() {
-  this.route('projects', { resetNamespace: true },function(){
-  	this.route('new');
-  	this.route('project', { resetNamespace: true, path: ':project_id' }, function(){
-        this.route('model');
-        this.route('payment');
-  	});
+  this.route('records', { resetNamespace: true },function(){
+    this.route('new');
   });
   this.route('account');
 });
