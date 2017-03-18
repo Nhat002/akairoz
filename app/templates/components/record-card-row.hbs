@@ -7,16 +7,17 @@
             </div>
             
             <div class="card-content">
-                {{rowData.description}}
+                Project type: {{rowData.type}}
+            </div>
+            <div class="card-content">
+                Created At: {{moment-format (unix rowData.createdAt) 'MMMM Do YYYY, h:mm:ss a'}}
             </div>
             
             <div class="card-action">
-                <div>
                     {{state-label label="Status" state=rowData.status}}
-                </div>
-                <div>
-                    {{state-label label="Payment Status" state=rowData.payment_status}}
-                </div>
+            </div>
+            <div class="card-action">
+                {{#link-to "record" rowData.id }}More info >>>{{/link-to}}
             </div>
         </div>
     </div>

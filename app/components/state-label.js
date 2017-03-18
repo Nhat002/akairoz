@@ -12,21 +12,26 @@ export default Ember.Component.extend({
   cancelMessage:"",
   incompleteMessage:"",
   states : {
-    'completed':'success',
+    'complete':'success',
+    'running':'info',
     'pending':'warning',
     'canceled':'danger',
   },
   colorClass: Ember.computed('state', function(){
     let states = this.get('states');
-    let label = states[this.get('state') || 'canceled'];
-    return `text-${label}`;
+    let textLabel = states[this.get('state') || 'canceled'];
+    return `text-${textLabel}`;
+  }),
+  running: Ember.computed('state', function(){
+    let label = this.get('state') || 'pending';
+    return label == 'running';
   }),
   completed: Ember.computed('state', function(){
-    let label = this.get('state') || 'canceled';
-    return label == 'completed';
+    let label = this.get('state') || 'pending';
+    return label == 'complete';
   }),
   canceled: Ember.computed('state', function(){
-    let label = this.get('state') || 'canceled';
+    let label = this.get('state') || 'pending';
     return label == 'canceled';
   }),
 });

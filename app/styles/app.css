@@ -17,6 +17,12 @@
   font-weight: 300;
   text-transform: uppercase;
 }
+.card .divider {
+position: relative;
+border-bottom: 1px solid #f0f0f0;
+margin-bottom: 30px;
+margin-top: 30px; 
+}
 
 .card .card-content {
   padding: 16px;

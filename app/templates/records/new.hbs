@@ -1,0 +1,61 @@
+<div class="card">
+  <div class="card-title">New Record</div> 
+    {{#bs-form formLayout="vertical" model=this.newRecord onSubmit=(action "submit") as |form|}}
+      <div class="card-content">
+        <div class="page-header">
+          <h4>Information</h4>
+        </div>
+        {{form.element controlType="text" label="Title" placeholder="Title" property="title" required=true}}
+        {{form.element controlType="text" label="Description" placeholder="Description" property="description" required=true}}
+        {{form.element controlType="text" label="Dataset Link" placeholder="S3 public dataset link" property="datasetLink"}}
+        {{!-- {{form.element controlType="text" label="Type of algorithm" placeholder="Exp: CNN, regression,.." property="type"}} --}}
+        <h5><b>Model Type</b></h5>
+          {{#bs-dropdown as |dd|}}
+            {{#dd.button}}{{selectedModelType}} <span class="caret"></span>{{/dd.button}}
+            {{#dd.menu as |menu|}}
+                {{#each modelTypes as |modelType|}}
+                  {{#menu.item}}
+                    {{!-- {{#bs-button onClick=(action "chooseInstanceType" instanceType)}} --}}
+                      <a href='#' {{action "selectModelType" modelType}}>{{modelType}}</a>
+                  {{/menu.item}}
+                {{/each}}
+            {{/dd.menu}}
+          {{/bs-dropdown}}
+      </div>
+      <div class="card-content">
+        {{form.element controlType="text" label="Maximum spend" placeholder="(SGD)" property="money"}}
+        {{form.element controlType="text" label="Maximum time" placeholder="(seconds)" property="time"}}
+        {{#bs-button icon="glyphicon glyphicon-download" onClick=(action "retrieveBenchmark")}}Retrieve Benchmark{{/bs-button}}
+        {{#bs-alert type="warning" visible=benchmarkAlert}}
+          You need to fill in model type, maximum spend and maximum time!!
+        {{/bs-alert}}
+      </div>
+      <div class="card-content">
+      {{content-pagination totalPages=benchmarkCount page=benchmarkPage}}
+      {{#each paginatedBenchmark as |benchmark index|}}
+        {{benchmark-page pageData=benchmark index=index maxTime=maxBenchmarkTime maxAccuracy=maxBenchmarkAccuracy maxPrice=maxBenchmarkPrice}}
+      {{/each}}
+      </div>
+      <div class="card-content">
+        <div class="page-header">
+          <h4>Running Parameters</h4>
+        </div>
+        {{#bs-dropdown as |dd|}}
+          {{#dd.button}}{{selectedInstanceType}} <span class="caret"></span>{{/dd.button}}
+          {{#dd.menu as |menu|}}
+              {{#each instanceTypes as |instanceType|}}
+                {{#menu.item}}
+                    <a href='#' {{action "selectInstanceType" instanceType}}>{{instanceType}}</a>
+                {{/menu.item}}
+              {{/each}}
+          {{/dd.menu}}
+        {{/bs-dropdown}}
+      </div>
+
+       <div class="card-content">
+        {{form.element controlType="text" label="Number of Parameter Server" placeholder=">= 1 AND =< 20" property="runParams.numberPS"}}
+        {{form.element controlType="text" label="Number of Worker" placeholder=">= 1 AND =< 20" property="runParams.numberWorker"}}
+        {{bs-button defaultText="Submit" type="primary" buttonType="submit"}}
+      </div>
+    {{/bs-form}}
+</div>

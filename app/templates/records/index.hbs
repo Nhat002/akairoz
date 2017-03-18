@@ -1,0 +1,23 @@
+<section>
+  <main>
+    <form class="form-horizontal scrollale margin-top-0">
+      <div class="container-fluid no-padding">
+        {{#bs-button}}
+          {{awesome-icon name="plus-square"}}
+          {{link-to "New Record" 'records.new'}}
+        {{/bs-button}}
+        <h2>Records History</h2>
+        {{#if records.length}}
+          {{#each paginatedRecords as |record index|}}
+                  {{record-card-row rowData=record index=index page=page perPage=perPage}}
+          {{/each}}
+        {{else}}
+          <p class="insignificant form-control-static">No Records available.</p>
+        {{/if}}
+      </div>
+    </form>
+    <div class="text-center">
+      {{content-pagination totalPages=pageCount page=page}}
+    </div>
+  </main>
+</section>

@@ -1,0 +1,57 @@
+<div class="card">
+  <div class="card-title">
+    <h1>{{record.title}} <small>project</small></h1>
+  </div>
+  <div class="card-content">
+  <div class="page-header">
+      <h2>Status</h2>
+      <p>{{state-label label="Current status" state=record.status}}</p>
+    </div>
+    <div class="page-header">
+      <h2>Description</h2>
+      <p>{{record.description}}</p>
+    </div>
+    <div class="page-header">
+      <h2>Project type</h2>
+      <p>{{record.type}}</p>
+    </div>
+    <div class="page-header">
+      <h2>Dataset Link</h2>
+      <p>{{record.datasetLink}}</p>
+    </div>
+    <div class="page-header">
+      <h2>Run Parameters</h2>
+      <p>Machine type: {{runParams.instanceType}} (Amazon EC2)</p>
+      <p>Number of Parameter Server: {{runParams.numberPS}}</p>
+      <p>Number of worker: {{runParams.numberWorker}}</p>
+    </div>
+    <div class="page-header">
+      <h2>Created At</h2>
+      <p>{{moment-format (unix record.createdAt) 'MMMM Do YYYY, h:mm:ss a'}}</p>
+    </div>
+    <div class="page-header">
+      <h2>Ended At</h2>
+      {{#if isEnded}}
+        <p>{{moment-format (unix record.endedAt) 'MMMM Do YYYY, h:mm:ss a'}}</p>
+      {{else}}
+        <p>Project is {{record.status}}</p>
+      {{/if}}
+    </div>
+    <div class="page-header">
+      <h2>Result</h2>
+      {{#if isEnded}}
+        <p>Running Time: {{record.result.running_time}}</p>
+        {{!-- {{#bs-progress as |p|}}
+            {{p.bar value=timePercent}}
+        {{/bs-progress}} --}}
+        <p>Accuracy: {{record.result.accuracy}}</p>
+        {{!-- {{#bs-progress as |p|}}
+            {{p.bar value=accuracyPercent}}
+        {{/bs-progress}} --}}
+        <p>Model link: {{record.result.model_link}}</p>
+      {{else}}
+        <p>Project is {{record.status}}</p>
+      {{/if}}
+    </div>
+  </div>
+</div>

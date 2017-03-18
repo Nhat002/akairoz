@@ -13,10 +13,20 @@
       {{awesome-icon name="times"}}
     {{/if}}
   {{else}}
-    {{#if incompleteMessage}}
-      {{incompleteMessage}}
+    {{#if running}}
+      {{#if incompleteMessage}}
+        {{incompleteMessage}}
+      {{else}}
+        {{awesome-icon name="check"}}
+      {{/if}}
     {{else}}
-      {{awesome-icon name="warning"}}
+      {{#if incompleteMessage}}
+        {{incompleteMessage}}
+      {{else}}
+        {{awesome-icon name="warning"}}
+      {{/if}}
     {{/if}}
   {{/if}}
 {{/if}}
+
+{{state}}

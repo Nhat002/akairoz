@@ -11,7 +11,7 @@ export default Ember.Component.extend({
   }),
   actions: {
     goToPage: function(page){
-      this.get('onSelect')(this.get(page));
+      this.get('onSelect')(page);
     }
   }
 });

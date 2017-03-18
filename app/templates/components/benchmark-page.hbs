@@ -1,0 +1,33 @@
+<h5><b>Benchmark {{addOne index}}</b></h5>
+<div class="text-center"><h5><b>Model type: {{algoName}}</b></h5></div>
+<div class="table-responsive">
+  <table class="table">
+    <thead>
+    <tr>
+      <th>Instance type</th>
+      <th>Number of worker</th>
+      <th>Number of Parameter Server</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+      <td>{{pageData.workerClusterName}}</td>
+      <td>{{pageData.numberWorker}}</td>
+      <td>{{pageData.numberPS}}</td>
+    </tr> 
+    </tbody>
+  </table>
+</div>
+
+<div>Time {{pageData.time}} s</div>
+{{#bs-progress as |p|}}
+    {{p.bar value=timePercent}}
+{{/bs-progress}}
+<div>Accuracy: {{pageData.accuracy}}%</div>
+{{#bs-progress as |p|}}
+    {{p.bar value=accuracyPercent}}
+{{/bs-progress}}
+<div>Price: {{pageData.price}} SGD</div>
+{{#bs-progress as |p|}}
+    {{p.bar value=pricePercent}}
+{{/bs-progress}}
