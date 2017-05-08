@@ -7,8 +7,27 @@
         </div>
         {{form.element controlType="text" label="Title" placeholder="Title" property="title" required=true}}
         {{form.element controlType="text" label="Description" placeholder="Description" property="description" required=true}}
-        {{form.element controlType="text" label="Dataset Link" placeholder="S3 public dataset link" property="datasetLink"}}
+        <div class="page-header">
+          <h4>Data</h4>
+        </div>
+        {{form.element controlType="text" label="Dataset Upload" placeholder="S3 public dataset link" property="datasetLink"}}
+        <p>or</p>
+        <p><b>Sample Data</b></p>
+        {{#bs-dropdown as |dl|}}
+            {{#dl.button}}{{selectedSampleData}} <span class="caret"></span>{{/dl.button}}
+            {{#dl.menu as |menu|}}
+                {{#each sampleData as |sample|}}
+                  {{#menu.item}}
+                    {{!-- {{#bs-button onClick=(action "chooseInstanceType" instanceType)}} --}}
+                      <a href='#' {{action "selectSampleData" sample}}>{{sample}}</a>
+                  {{/menu.item}}
+                {{/each}}
+            {{/dl.menu}}
+          {{/bs-dropdown}}
         {{!-- {{form.element controlType="text" label="Type of algorithm" placeholder="Exp: CNN, regression,.." property="type"}} --}}
+        <div class="page-header">
+          <h4>Model</h4>
+        </div>
         <h5><b>Model Type</b></h5>
           {{#bs-dropdown as |dd|}}
             {{#dd.button}}{{selectedModelType}} <span class="caret"></span>{{/dd.button}}
@@ -22,20 +41,48 @@
             {{/dd.menu}}
           {{/bs-dropdown}}
       </div>
+      <div class="page-header">
+          <h4>Benchmark</h4>
+        </div>
       <div class="card-content">
-        {{form.element controlType="text" label="Maximum spend" placeholder="(SGD)" property="money"}}
-        {{form.element controlType="text" label="Maximum time" placeholder="(seconds)" property="time"}}
+        {{form.element controlType="text" label="Maximum spend for model training" placeholder="(SGD)" property="money"}}
+        {{form.element controlType="text" label="Maximum time for model training" placeholder="(seconds)" property="time"}}
         {{#bs-button icon="glyphicon glyphicon-download" onClick=(action "retrieveBenchmark")}}Retrieve Benchmark{{/bs-button}}
         {{#bs-alert type="warning" visible=benchmarkAlert}}
           You need to fill in model type, maximum spend and maximum time!!
         {{/bs-alert}}
       </div>
-      <div class="card-content">
-      {{content-pagination totalPages=benchmarkCount page=benchmarkPage}}
-      {{#each paginatedBenchmark as |benchmark index|}}
-        {{benchmark-page pageData=benchmark index=index maxTime=maxBenchmarkTime maxAccuracy=maxBenchmarkAccuracy maxPrice=maxBenchmarkPrice}}
-      {{/each}}
+      {{#if haveBenchmark}}
+      {{else}}
+        <div class="card-content">
+        <div class="text-center"><h5><b>Model type: {{selectedModelType}}</b></h5></div>
+        <div class="text-center"><h5><b>Data: {{dataForBenchmark}}</b></h5></div>
+        <div class="table-responsive">
+          <table class="table">
+            <thead>
+            <tr>
+              <th>Instance type</th>
+              <th>Number of worker</th>
+              <th>Number of Parameter Server</th>
+              <th>Time</th>
+              <th>Price</th>
+            </tr>
+            </thead>
+            <tbody>
+              {{#each benchmarks as |benchmark index|}}
+                <tr>
+                <td>{{benchmark.workerClusterName}}</td>
+                <td>{{benchmark.numberWorker}}</td>
+                <td>{{benchmark.numberPS}}</td>
+                <td>{{benchmark.time}}</td>
+                <td>{{benchmark.price}}</td>
+                </tr>
+              {{/each}} 
+            </tbody>
+          </table>
+        </div>
       </div>
+      {{/if}}
       <div class="card-content">
         <div class="page-header">
           <h4>Running Parameters</h4>

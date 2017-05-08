@@ -20,22 +20,9 @@ export default Ember.Controller.extend({
   //   }
   // },
   benchmarks: [],
-  benchmarkPage: 1,
-  benchmarkPerPage: 1,
-  benchmarkCount: Ember.computed('benchmarks.[]', function(){
-    let benchmarks = this.get('benchmarks');
-    let perPage = this.get('benchmarkPerPage') || 1;
-    return benchmarks.get('length') / perPage;
-
-  }),
-  paginatedBenchmark: Ember.computed('benchmarkPage', 'benchmarks.[]', function(){
-    let page = this.get('benchmarkPage') || 1;
-    let perPage = this.get('benchmarkPerPage') || 1;
-    let benchmarks = this.get('benchmarks');
-    let startIndex = (page - 1) * perPage;
-    let stopIndex = startIndex + perPage;
-    return benchmarks.slice(startIndex, stopIndex);
-  }),
+  haveBenchmark: Ember.computed.empty("benchmarks"),
+  selectedSampleData : "Choose Data",
+  sampleData : ["MNIST", "CIPHAR-10"],
   selectedModelType: "Model types",
   selectedInstanceType: "Instance Types",
   typeInputted: Ember.computed('selectedModelType', function(){
@@ -50,7 +37,7 @@ export default Ember.Controller.extend({
     runParams:{},
   },
   instanceTypes: ["t2.micro","t2.small","t2.medium", "t2.large"],
-  modelTypes: ["Multilayer NN","Convolutional NN", "Softmax Regression"],
+  modelTypes: ["Softmax Regression","Convolutional NN"],
   maxBenchmarkTime: Ember.computed('benchmarks.[]', function(){
     let benchmarks = this.get('benchmarks');
     let maxBenchmarkTime = 0;
@@ -60,16 +47,6 @@ export default Ember.Controller.extend({
       }
     });
     return maxBenchmarkTime;
-  }),
-  maxBenchmarkAccuracy: Ember.computed('benchmarks.[]', function(){
-    let benchmarks = this.get('benchmarks');
-    let maxBenchmarkAccuracy = 0;
-    benchmarks.forEach(function(item, index, enumerable){
-      if (item.get('accuracy') > maxBenchmarkAccuracy) {
-        maxBenchmarkAccuracy = item.get('accuracy');
-      }
-    });
-    return maxBenchmarkAccuracy;
   }),
   maxBenchmarkPrice: Ember.computed('benchmarks.[]', function(){
     let benchmarks = this.get('benchmarks');
@@ -94,7 +71,7 @@ export default Ember.Controller.extend({
       }
       let controller = this;
       let transitionToRecords = function(){
-        controller.transitionToRoute("records");
+        controller.replaceRoute("records");
       };
       console.log(data);
       let record = this.store.createRecord('record',data);
@@ -105,6 +82,7 @@ export default Ember.Controller.extend({
       if (!allInputed) return;
       let newRecord = this.get('newRecord');
       let modelTypes = this.get('modelTypes');
+      let sampleData = this.get('sampleData');
       let params = {
         moneyMax: newRecord.money,
         time: newRecord.time,
@@ -112,6 +90,7 @@ export default Ember.Controller.extend({
       };
       let benchmarks = this.store.query('benchmark', params);
       this.set('benchmarks',benchmarks);
+      this.set('dataForBenchmark', sampleData[modelTypes.indexOf(newRecord.modelType)]);
     },
     selectInstanceType(instanceType) {
       let newRecord = this.get('newRecord');
@@ -122,11 +101,21 @@ export default Ember.Controller.extend({
     selectModelType(modelType) {
       let newRecord = this.get('newRecord');
       newRecord.modelType = modelType;
+      this.set('benchmarks',[]);
       this.set('selectedModelType', modelType);
     },
-    willTransition(){
+    selectSampleData(sampleData) {
+      let newRecord = this.get('newRecord');
+      if (newRecord.datasetLink == null || newRecord.datasetLink == "") {
+        newRecord.datasetLink = sampleData + " sample";
+      }
+      this.set('selectedSampleData', sampleData);
+    },
+    willTransition: function(transition){
       this.controller.set('newRecord').clear();
       this.controller.set('selectedInstanceType').clear();
+      this.controller.set('selectedModelType').clear();
+      this.controller.set('selectedSampleData').clear();
     },
   }
 });

@@ -7,6 +7,5 @@ export default DS.Model.extend({
   numberPS: DS.attr('number'),
   time: DS.attr('number'),
   price: DS.attr('number'),
-  accuracy: DS.attr('number'),
   psClusterName: DS.attr('number'),
 });

@@ -46,7 +46,7 @@ export default Ember.Component.extend({
 
     var edgeRange = this.get('edgeRange');
     var midRange = this.get('midRange');
-    var ellipsis = '&hellip;';
+    var ellipsis = '...';
 
     var midRangeStartPage, midRangeEndPage;
     if (page >= 1 && page < midRange/2){

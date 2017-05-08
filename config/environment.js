@@ -20,7 +20,7 @@ module.exports = function(environment) {
   };
   ENV.contentSecurityPolicy = {
       // ... other stuff here
-      'connect-src': "'self' http://localhost:8080 http://10.27.131.26:8000"
+      'connect-src': "'self' http://localhost:8800 http://localhost:8201 http://localhost:8221"
   }
 
   if (environment === 'development') {

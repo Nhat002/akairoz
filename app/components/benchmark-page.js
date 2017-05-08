@@ -18,11 +18,6 @@ export default Ember.Component.extend({
     let maxTime = this.get('maxTime');
     return pageData.get('time') * 100 / maxTime;
   }),
-  accuracyPercent: Ember.computed('pageData','maxAccuracy', function(){
-    let pageData = this.get('pageData');
-    let maxAccuracy = this.get('maxAccuracy');
-    return pageData.get('accuracy') * 100/ maxAccuracy;
-  }),
   pricePercent: Ember.computed('pageData','maxPrice', function(){
     let pageData = this.get('pageData');
     let maxPrice = this.get('maxPrice');

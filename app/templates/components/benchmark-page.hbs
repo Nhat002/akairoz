@@ -7,6 +7,8 @@
       <th>Instance type</th>
       <th>Number of worker</th>
       <th>Number of Parameter Server</th>
+      <th>Time</th>
+      <th>Price</th>
     </tr>
     </thead>
     <tbody>
@@ -14,20 +16,18 @@
       <td>{{pageData.workerClusterName}}</td>
       <td>{{pageData.numberWorker}}</td>
       <td>{{pageData.numberPS}}</td>
+      <td>{{pageData.time}}</td>
+      <td>{{pageData.price}}</td>
     </tr> 
     </tbody>
   </table>
 </div>
-
+{{!-- 
 <div>Time {{pageData.time}} s</div>
 {{#bs-progress as |p|}}
     {{p.bar value=timePercent}}
 {{/bs-progress}}
-<div>Accuracy: {{pageData.accuracy}}%</div>
-{{#bs-progress as |p|}}
-    {{p.bar value=accuracyPercent}}
-{{/bs-progress}}
 <div>Price: {{pageData.price}} SGD</div>
 {{#bs-progress as |p|}}
     {{p.bar value=pricePercent}}
-{{/bs-progress}}
+{{/bs-progress}} --}}

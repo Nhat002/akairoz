@@ -1,0 +1,14 @@
+<div class="container">
+<div class="row">
+<div class="col-md-4 col-md-offset-4 col-sm-12">
+{{#bs-form model=this onSubmit=(action 'authenticate') as |form|}}
+  {{form.element controlType="text"label="Username" placeholder="Username" property="username" required=true}}
+  {{form.element controlType="password"label="Password" placeholder="Enter password" property="password" required=true}}
+  {{bs-button defaultText="Submit" type="primary" buttonType="submit"}}
+{{/bs-form}}
+{{#if errorMessage}}
+    <p>Error: {{errorMessage}}</p>
+  {{/if}}
+</div>
+</div>
+</div>

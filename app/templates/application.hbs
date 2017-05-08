@@ -5,11 +5,25 @@
     </div>
     {{#navbar.content}}
         {{#navbar.nav as |nav|}}
+        {{#if session.isAuthenticated}}          
             {{#nav.item}}{{#nav.link-to "records"}}Records{{/nav.link-to}}{{/nav.item}}
             {{#nav.item}}{{#nav.link-to "account"}}Account{{/nav.link-to}}{{/nav.item}}
+            {{#nav.item}}{{#nav.link-to "logout"}}Logout{{/nav.link-to}}{{/nav.item}}
+        {{else}}
+            {{#nav.item}}{{#nav.link-to "login"}}Login{{/nav.link-to}}{{/nav.item}}
+        {{/if}}
         {{/navbar.nav}}
     {{/navbar.content}}
 {{/bs-navbar}}
-<div class="container">
-  {{outlet}}
+<div>
+{{outlet}}
+</div>
+<div class="footer">
+    <hr />
+        <div class="text-center center-block">
+            <p class="txt-railway">Copyright © Final Year Project Team NTU 2017. All right reserved. </p>
+            <br />
+                <a href="mailto:donta@ntu.edu.sg"><i id="social-em" class="fa fa-envelope-square fa-3x social"></i></a>
+</div>
+    <hr />
 </div>

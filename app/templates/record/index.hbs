@@ -3,55 +3,86 @@
     <h1>{{record.title}} <small>project</small></h1>
   </div>
   <div class="card-content">
-  <div class="page-header">
-      <h2>Status</h2>
+  <div class="row">
+    <div class="col-sm-6">
+      <h3>Status</h3>
       <p>{{state-label label="Current status" state=record.status}}</p>
     </div>
-    <div class="page-header">
-      <h2>Description</h2>
+    <div class="col-sm-6">
+      <h3>Description</h3>
       <p>{{record.description}}</p>
     </div>
-    <div class="page-header">
-      <h2>Project type</h2>
+  </div>
+  <div class="row">
+    <div class="col-sm-6">
+      <h3>Project type</h3>
       <p>{{record.type}}</p>
     </div>
-    <div class="page-header">
-      <h2>Dataset Link</h2>
+    <div class="col-sm-6">
+      <h3>Dataset Link</h3>
       <p>{{record.datasetLink}}</p>
     </div>
-    <div class="page-header">
-      <h2>Run Parameters</h2>
-      <p>Machine type: {{runParams.instanceType}} (Amazon EC2)</p>
-      <p>Number of Parameter Server: {{runParams.numberPS}}</p>
-      <p>Number of worker: {{runParams.numberWorker}}</p>
-    </div>
-    <div class="page-header">
-      <h2>Created At</h2>
-      <p>{{moment-format (unix record.createdAt) 'MMMM Do YYYY, h:mm:ss a'}}</p>
-    </div>
-    <div class="page-header">
-      <h2>Ended At</h2>
-      {{#if isEnded}}
-        <p>{{moment-format (unix record.endedAt) 'MMMM Do YYYY, h:mm:ss a'}}</p>
-      {{else}}
-        <p>Project is {{record.status}}</p>
-      {{/if}}
-    </div>
-    <div class="page-header">
-      <h2>Result</h2>
-      {{#if isEnded}}
-        <p>Running Time: {{record.result.running_time}}</p>
-        {{!-- {{#bs-progress as |p|}}
-            {{p.bar value=timePercent}}
-        {{/bs-progress}} --}}
+  </div>
+    <h3>Timeline</h3>
+    <div class="row">
+     <div class="timeline-centered">
+
+        <article class="timeline-entry">
+
+            <div class="timeline-entry-inner">
+               <div class="timeline-icon bg-success">
+                    <i class="entypo-feather"></i>
+                </div>
+
+                <div class="timeline-label">
+                    <h2><a href="#">Project created</a> <span>{{moment-format (unix record.createdAt) 'MMMM Do YYYY, h:mm:ss a'}}</span></h2>
+                    <h2>Run parameters: </h2>
+                      <p>Machine type: {{runParams.instanceType}} (Amazon EC2)</p>
+                    <p>Number of Parameter Server: {{runParams.numberPS}}</p>
+                    <p>Number of worker: {{runParams.numberWorker}}</p>
+                </div>
+            </div>
+        </article>
+        <article class="timeline-entry">
+             <div class="timeline-entry-inner">
+                {{#if isEnded}}
+                  <div class="timeline-icon bg-success">
+                    <i class="entypo-feather"></i>
+                  </div>
+
+                  <div class="timeline-label">
+                  <h2><a href="#">Project ended</a> <span>{{moment-format (unix record.endedAt) 'MMMM Do YYYY, h:mm:ss a'}}</span></h2>
+                  <h2>Result</h2>
+                  <p>Running Time: {{record.result.running_time}}</p>
         <p>Accuracy: {{record.result.accuracy}}</p>
-        {{!-- {{#bs-progress as |p|}}
-            {{p.bar value=accuracyPercent}}
-        {{/bs-progress}} --}}
         <p>Model link: {{record.result.model_link}}</p>
-      {{else}}
-        <p>Project is {{record.status}}</p>
-      {{/if}}
+                  </div>
+
+                {{else}}
+                  <div class="timeline-icon bg-{{projectStatus}}">
+                    <i class="entypo-feather"></i>
+                  </div>
+                  <div class="timeline-label">
+                  <h2><a href="#">Project is {{record.status}}</a> </h2>
+                  </div>
+                  {{/if}}
+             </div>
+        </article>
+         {{#if isEnded}}
+         {{else}}
+           <article class="timeline-entry begin">
+
+            <div class="timeline-entry-inner">
+
+                <div class="timeline-icon" style="-webkit-transform: rotate(-90deg); -moz-transform: rotate(-90deg);">
+                    <i class="entypo-flight"></i> +
+                </div>
+
+            </div>
+
+        </article>
+         {{/if}}
+        </div>
     </div>
   </div>
 </div>

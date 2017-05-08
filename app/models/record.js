@@ -8,7 +8,7 @@ export default DS.Model.extend({
   endedAt: DS.attr('number'),
   description: DS.attr(),
   datasetLink: DS.attr(),
-  runParams:DS.attr('raw'),
+  runParams:DS.attr(),
   result: DS.attr(),
   userId: DS.attr(),
 });
