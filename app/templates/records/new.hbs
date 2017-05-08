@@ -41,10 +41,10 @@
             {{/dd.menu}}
           {{/bs-dropdown}}
       </div>
-      <div class="page-header">
+      <div class="card-content">
+        <div class="page-header">
           <h4>Benchmark</h4>
         </div>
-      <div class="card-content">
         {{form.element controlType="text" label="Maximum spend for model training" placeholder="(SGD)" property="money"}}
         {{form.element controlType="text" label="Maximum time for model training" placeholder="(seconds)" property="time"}}
         {{#bs-button icon="glyphicon glyphicon-download" onClick=(action "retrieveBenchmark")}}Retrieve Benchmark{{/bs-button}}
