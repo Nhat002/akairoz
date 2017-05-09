@@ -5,7 +5,7 @@ import ENV from 'fyp-app/config/environment';
 export default OAuth2PasswordGrant.extend({
   store: Ember.inject.service(),
   cookies: Ember.inject.service(),
-  serverTokenEndpoint: "http://localhost:8221/v1/authenticate",
+  serverTokenEndpoint: `http://${ENV.APP.Hera}/v1/authenticate`,
   authenticate(identification, password, scope = [], headers = {}) {
     let authenticator = this;
     return new Ember.RSVP.Promise((resolve, reject) => {
