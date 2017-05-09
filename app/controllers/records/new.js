@@ -20,7 +20,7 @@ export default Ember.Controller.extend({
   //   }
   // },
   benchmarks: [],
-  haveBenchmark: Ember.computed.empty("benchmarks"),
+  benchmarkEmpty: Ember.computed.empty("benchmarks"),
   selectedSampleData : "Choose Data",
   sampleData : ["MNIST", "CIPHAR-10"],
   selectedModelType: "Model types",
@@ -116,6 +116,32 @@ export default Ember.Controller.extend({
       this.controller.set('selectedInstanceType').clear();
       this.controller.set('selectedModelType').clear();
       this.controller.set('selectedSampleData').clear();
+    },
+    currentNeuronPerLayer: 55,
+    currentNumLayers: 2,
+    /**
+    According to formulation in Minh's report, the time cost increases linearly with the number of layer and the size of parameter set. 
+    In the future, we may also take network speed in to consideration. Now, because Amazon does not public specific network performance, 
+    it is needed to be examined manually
+    */
+    updateBenchmark(){
+      let benchmarks = this.get('benchmarks').toArray();
+      let newRecord = this.get('newRecord');
+      let averageNeuronPerLayer = newRecord.averageNeuronPerLayer || 2 ;
+      let numLayers  = newRecord.numLayers || 55;
+      let currentNeuronPerLayer = this.get('currentNeuronPerLayer') || 2;
+      let currentNumLayers = this.get('currentNumLayers') || 55;
+      benchmarks.forEach(function(item, index, enumerable) {
+        let price  = item.get('price') || 0;
+        
+        let newPrice = parseFloat(price * averageNeuronPerLayer * numLayers / (currentNumLayers * currentNeuronPerLayer)).toFixed(3);
+        item.set('price', newPrice);
+        let time  = item.get('time') || 0;
+        let newTime = parseFloat(time * averageNeuronPerLayer * numLayers / (currentNumLayers * currentNeuronPerLayer)).toFixed(3);
+        item.set('time', newTime);
+      });
+      this.set('currentNeuronPerLayer', averageNeuronPerLayer);
+      this.set('currentNumLayers', numLayers);
     },
   }
 });

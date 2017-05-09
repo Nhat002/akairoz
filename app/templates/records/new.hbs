@@ -52,7 +52,7 @@
           You need to fill in model type, maximum spend and maximum time!!
         {{/bs-alert}}
       </div>
-      {{#if haveBenchmark}}
+      {{#if benchmarkEmpty}}
       {{else}}
         <div class="card-content">
         <div class="text-center"><h5><b>Model type: {{selectedModelType}}</b></h5></div>
@@ -81,6 +81,14 @@
             </tbody>
           </table>
         </div>
+        <h5>
+    According to formulation in Minh's report, the time cost increases linearly with the number of layer and the size of parameter set. 
+    In the future, we may also take network speed in to consideration. Now, because Amazon does not public specific network performance, 
+    it is needed to be examined manually
+    </h5>
+        {{form.element controlType="text" label="Average number of neurons per layer" placeholder="(number)" property="averageNeuronPerLayer"}}
+        {{form.element controlType="text" label="Number of layer in neural net" placeholder="(number)" property="numLayers"}}
+        {{#bs-button icon="glyphicon glyphicon-refresh" onClick=(action "updateBenchmark")}}Update Benchmark{{/bs-button}}
       </div>
       {{/if}}
       <div class="card-content">
